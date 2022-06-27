@@ -23,13 +23,17 @@ export function Lesson(props: LessonProps) {
   const isActiveLesson = slug === props.slug
 
 	return (
-		<Link to={`/event/lesson/${props.slug}`} className='group'>
+		<Link
+      to={`/event/lesson/${props.slug}`}
+      className='group'
+      onClick={!isLessonAvailable ? event => event.preventDefault() : undefined}
+    >
       <span className="text-gray-300">
         {availableDateFormatted}
       </span>
 
       <div 
-        className={classNames('rounded border border-gray-500 p-4 mt-2 group-hover:border-green-500', {
+        className={classNames('relative rounded border border-gray-500 p-4 mt-2 group-hover:border-green-500', {
           'bg-green-500' : isActiveLesson,
         })}
       >
@@ -57,6 +61,12 @@ export function Lesson(props: LessonProps) {
             {props.type === 'live' ? 'AO VIVO' : 'AULA PRÁTICA'}
           </span>
         </header>
+
+        {isActiveLesson && (
+          <div
+            className='w-[0.859rem] h-[0.859rem] bg-green-500 absolute self-center left-[-0.45rem] rounded-sm rotate-45'>
+          </div>
+        )}
 
         <strong className={classNames('mt-5 block', {
           'text-white': isActiveLesson,
